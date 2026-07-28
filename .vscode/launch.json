@@ -1,0 +1,16 @@
+{
+  // Press F5 to run the app with the project venv.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Distinction Builder",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "justMyCode": true
+    }
+  ]
+}
