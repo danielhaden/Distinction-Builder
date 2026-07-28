@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+
+# App data (local note databases)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+notes.sqlite*
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Session notes (never committed)
+STATUS.md
