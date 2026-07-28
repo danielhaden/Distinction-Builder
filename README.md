@@ -30,7 +30,8 @@ python3.12 -m venv .venv
 main.py                       — entry point
 distinction_builder/
   app.py                      — QApplication + window bootstrap
-  main_window.py              — three-pane UI (list / editor / connections)
+  main_window.py              — tabbed UI: Notes pane + Forms canvas
+  canvas.py                   — QGraphicsView canvas; draggable, nestable forms
   storage.py                  — SQLite NoteStore; derives links from bodies
   models.py                   — Note/Link data types + wikilink parsing
 laws_of_form/                 — pure calculus library (Qt-free)
@@ -39,7 +40,26 @@ laws_of_form/                 — pure calculus library (Qt-free)
 tests/
   test_storage.py             — storage + link-resolution tests
   test_laws_of_form.py        — construction, printing, and the two axioms
+  test_canvas.py              — canvas creation, nesting, and the form bridge
 ```
+
+## Form canvas
+
+The **Forms** tab is a direct-manipulation canvas where each form is a rounded
+box — a *drawn distinction*, its boundary the mark, its interior the space it
+holds:
+
+- **Double-click empty space** to create a form; **double-click a form** to edit
+  its text inline.
+- **Drag** a form to move it; **drop it onto another form** to place it inside
+  (containment — nesting distinctions). Drag it back out to the canvas to detach.
+- **Delete/Backspace** removes the selected form (and anything nested in it).
+- Boxes grow to fit their contents; nesting depth is shown by a subtle fill
+  tint. Wheel to zoom.
+
+Every box maps back to the calculus via `FormItem.to_form()` / `FormCanvas.to_form()`:
+a box is a `Mark` around the space of its text and children, so the structure
+above renders as, e.g., `(a distinction (holds a note (and this)))`.
 
 ## Laws of Form
 

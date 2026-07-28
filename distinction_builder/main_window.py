@@ -26,10 +26,12 @@ from PySide6.QtWidgets import (
     QPlainTextEdit,
     QPushButton,
     QSplitter,
+    QTabWidget,
     QVBoxLayout,
     QWidget,
 )
 
+from .canvas import FormCanvas
 from .models import Note
 from .storage import NoteStore
 
@@ -56,6 +58,15 @@ class MainWindow(QMainWindow):
     # -- construction --------------------------------------------------------
 
     def _build_ui(self) -> None:
+        self.tabs = QTabWidget()
+        self.tabs.addTab(self._build_notes_pane(), "Notes")
+        self.canvas = FormCanvas()
+        self.tabs.addTab(self.canvas, "Forms")
+        self.setCentralWidget(self.tabs)
+        self.tabs.setCurrentWidget(self.canvas)
+        self.statusBar().showMessage("Ready")
+
+    def _build_notes_pane(self) -> QWidget:
         splitter = QSplitter(Qt.Orientation.Horizontal)
         splitter.addWidget(self._build_list_pane())
         splitter.addWidget(self._build_editor_pane())
@@ -63,8 +74,7 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(0, 2)
         splitter.setStretchFactor(1, 5)
         splitter.setStretchFactor(2, 2)
-        self.setCentralWidget(splitter)
-        self.statusBar().showMessage("Ready")
+        return splitter
 
     def _build_list_pane(self) -> QWidget:
         pane = QWidget()
